@@ -5,17 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +30,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AdicionalTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    JetpackComposeTutorial(
+                    TaskCompletionScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -41,63 +40,51 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun JetpackComposeTutorial(modifier: Modifier = Modifier) {
+fun TaskCompletionScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        // 1. Banner con altura fija
+        // 1. Imagen redonda con el ícono de check
         Image(
-            painter = painterResource(id = R.drawable.bg_compose_background), // pon banner.png en res/drawable
-            contentDescription = "Banner",
-            contentScale = ContentScale.Crop,
+            painter = painterResource(id = R.drawable.ic_task_completed), // Asegúrate de tener el ícono en res/drawable
+            contentDescription = "Check icon",
             modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp) // altura fija para que se vea como en tu imagen
+                .size(120.dp)
+                .clip(CircleShape) // Esto hace que la imagen sea redonda
         )
 
-        // Contenido de texto con padding lateral
-        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
+        Spacer(modifier = Modifier.height(20.dp))
 
-            // 2. Título
-            Text(
-                text = "Jetpack Compose tutorial",
-                style = MaterialTheme.typography.headlineSmall,
+        // 2. Título (All tasks completed)
+        Text(
+            text = "All tasks completed",
+            style = MaterialTheme.typography.headlineSmall.copy(
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+                fontSize = 24.sp
+            ),
+            modifier = Modifier.padding(bottom = 8.dp),
+            color = Color.Black
+        )
 
-            // 3. Subtítulo
-            Text(
-                text = "Jetpack Compose is a modern toolkit for building native Android UI. " +
-                        "Compose simplifies and accelerates UI development on Android with less code, " +
-                        "powerful tools, and intuitive Kotlin APIs.",
-                style = MaterialTheme.typography.bodyMedium,
-                fontSize = 16.sp,
-                lineHeight = 22.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            // 4. Cuerpo
-            Text(
-                text = "In this tutorial, you build a simple UI component with declarative functions. " +
-                        "You call Compose functions to say what elements you want and the Compose compiler does the rest. " +
-                        "Compose is built around Composable functions. These functions let you define your app’s UI " +
-                        "programmatically because they let you describe how it should look and provide data dependencies, " +
-                        "rather than focus on the process of the UI’s construction, such as initializing an element and " +
-                        "then attaching it to a parent. To create a Composable function, you add the @Composable annotation " +
-                        "to the function name.",
-                style = MaterialTheme.typography.bodyMedium,
-                fontSize = 14.sp,
-                lineHeight = 20.sp
-            )
-        }
+        // 3. Subtítulo (Nice work!)
+        Text(
+            text = "Nice work!",
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontSize = 16.sp
+            ),
+            color = Color.Gray
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun JetpackComposeTutorialPreview() {
+fun TaskCompletionScreenPreview() {
     AdicionalTheme {
-        JetpackComposeTutorial()
+        TaskCompletionScreen()
     }
 }
